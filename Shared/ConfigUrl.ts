@@ -1,0 +1,1 @@
+export const tokenUrl= "https://jdpjdatst02-api.jdadelivers.com/api/oauth/token";
