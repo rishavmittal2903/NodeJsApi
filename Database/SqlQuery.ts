@@ -3,19 +3,20 @@ import { MysqlError } from "mysql";
 import { ErrorCallback } from "../Handlers/ExceptionHandler";
 
 export const openConnection = () => {
-  
-    SqlConnection.SqlConnectionInstance.connect((err: MysqlError) => {
+  console.log("reached");
+    SqlConnection.SqlClient.connect((err: MysqlError) => {
         ErrorCallback(err);
+console.log("connected to database")
     });
 }
 export const closeConnection = () => {
     let isClosed: boolean = true;
-    SqlConnection.SqlConnectionInstance.end((err) => {
+    SqlConnection.SqlClient.end((err) => {
         ErrorCallback(err);
     });
 }
 export const destroyConnection = () => {
-    SqlConnection.SqlConnectionInstance.destroy();
+    SqlConnection.SqlClient.destroy();
 }
 export const insertPageConfig = () => {
     try {

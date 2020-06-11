@@ -1,6 +1,7 @@
 import RedisClient from "../RedisCache/RedisClient"
 import ErrorHandler, { ErrorCallback } from "../Handlers/ExceptionHandler"
 import { CONNECTION_NOT_ESTABLISHED, KEY_NOT_EXIST } from "../Shared/ErrorMessages";
+import { resolve } from "url";
 
 const Instance=RedisClient.RedisClientInstance;
 const isConnectionEstablished = () => {
@@ -19,10 +20,13 @@ export  const getValueAsperKey =async (key: string) => {
     {
         throw new ErrorHandler(500, KEY_NOT_EXIST);
     }
-     Instance.get(key,(err,value)=>{
-        ErrorCallback(err);
-         return value;
-     });
+ return  await new Promise((resolve,reject)=>{
+    Instance.get(key,(err,value)=>{
+       if(err) reject(err)
+       resolve(value);
+    });
+  })
+     
 }
 export const setValueWithExipryTime = (key: string,expiryTime:number, value: any) => {
     isConnectionEstablished();
