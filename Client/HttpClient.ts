@@ -1,5 +1,5 @@
 import axios from "axios"
-import { getHeaders } from "../Utils/ConfigWrapper";
+import { getHeaders } from "../utils/ConfigWrapper";
 export const httpRequest = async (
     url: string,
     requestMethod: string | any,

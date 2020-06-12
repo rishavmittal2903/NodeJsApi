@@ -1,7 +1,7 @@
 import {Request,Response,NextFunction} from "express"
+import { Enums } from "../shared/Enums";
+import { UNAUTHORIZED } from "../shared/ErrorMessages";
 import { getExpiryTime } from "./DecodeToken";
-import { Enums } from "../Shared/Enums";
-import { UNAUTHORIZED } from "../Shared/ErrorMessages";
 export const AuthenticateToken=(request:Request,response:Response,next:NextFunction)=>
 {
 const bearerToken=request.headers.authorization?.replace(Enums.BEARER,"");

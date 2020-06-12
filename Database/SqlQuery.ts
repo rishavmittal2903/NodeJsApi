@@ -1,8 +1,8 @@
 import SqlConnection from "./SqlConnection"
 import { MysqlError } from "mysql";
-import { ErrorCallback } from "../Handlers/ExceptionHandler";
+import { ErrorCallback } from "../handler/ExceptionHandler";
 
-const sqlInstance=SqlConnection.SqlClient.sqlInstance;
+const sqlInstance=SqlConnection.SqlClient;
 export const openConnection = () => {
   console.log("reached");
   sqlInstance.connect((err: MysqlError) => {

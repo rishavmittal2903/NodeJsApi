@@ -1,10 +1,10 @@
 import { Router, Request, Response, NextFunction } from "express"
-import { httpRequest } from "../Client/HttpClient";
-import { tokenUrl } from "../Shared/ConfigUrl";
-import { Enums } from "../Shared/Enums";
-import { getAuthorizationHeader } from "../Utils/ConfigWrapper";
-import ErrorHandler from "../Handlers/ExceptionHandler";
-import { INTERNAL_SERVER_ERROR } from "../Shared/ErrorMessages";
+import { httpRequest } from "../client/HttpClient";
+import { tokenUrl } from "../shared/ConfigUrl";
+import { Enums } from "../shared/Enums";
+import { getAuthorizationHeader } from "../utils/ConfigWrapper";
+import ErrorHandler from "../handler/ExceptionHandler";
+import { INTERNAL_SERVER_ERROR } from "../shared/ErrorMessages";
 export const authRouter = Router();
 authRouter.get('/getToken', (request: Request, response: Response,next:NextFunction) => {
     const configHeader = getAuthorizationHeader()

@@ -1,5 +1,5 @@
 import { Response} from "express";
-import { Enums } from "../Shared/Enums";
+import { Enums } from "../shared/Enums";
 
 
 export default class ErrorHandler extends Error {
