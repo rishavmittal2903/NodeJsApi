@@ -2,21 +2,22 @@ import SqlConnection from "./SqlConnection"
 import { MysqlError } from "mysql";
 import { ErrorCallback } from "../Handlers/ExceptionHandler";
 
+const sqlInstance=SqlConnection.SqlClient.sqlInstance;
 export const openConnection = () => {
   console.log("reached");
-    SqlConnection.SqlClient.connect((err: MysqlError) => {
+  sqlInstance.connect((err: MysqlError) => {
         ErrorCallback(err);
 console.log("connected to database")
     });
 }
 export const closeConnection = () => {
     let isClosed: boolean = true;
-    SqlConnection.SqlClient.end((err) => {
+    sqlInstance.end((err) => {
         ErrorCallback(err);
     });
 }
 export const destroyConnection = () => {
-    SqlConnection.SqlClient.destroy();
+    sqlInstance.destroy();
 }
 export const insertPageConfig = () => {
     try {

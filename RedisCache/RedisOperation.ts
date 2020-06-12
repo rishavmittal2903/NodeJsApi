@@ -1,9 +1,8 @@
 import RedisClient from "../RedisCache/RedisClient"
 import ErrorHandler, { ErrorCallback } from "../Handlers/ExceptionHandler"
 import { CONNECTION_NOT_ESTABLISHED, KEY_NOT_EXIST } from "../Shared/ErrorMessages";
-import { resolve } from "url";
 
-const Instance=RedisClient.RedisClientInstance;
+const Instance=RedisClient.RedisClientInstance.redisInstance;
 const isConnectionEstablished = () => {
     if (!Instance.connected)
         throw new ErrorHandler(500, CONNECTION_NOT_ESTABLISHED);

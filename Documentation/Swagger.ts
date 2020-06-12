@@ -10,6 +10,13 @@ export const swaggerDocumentation= {
       }
       
     },
+    "securityDefinitions": {
+      "BearerAuth": {
+        "type": 'apiKey',
+        "in": 'header',
+        "name": 'authorization'
+      }
+    },
     "tags": [
       {
         "name": "UI Defination from json schema",
@@ -20,6 +27,7 @@ export const swaggerDocumentation= {
         "description":"OAuth token for validate the api"
       }
     ],
+  
     "schemes": [
       "https",
       "http"
@@ -31,6 +39,11 @@ export const swaggerDocumentation= {
             "UI Defination from json schema"
           ],
           "summary": "Get simplified UI Defination from json schema",
+          "security": [
+            {
+              "BearerAuth": []
+            }
+          ],
           "description": "Return simplified json object",
           "operationId": "getUIDefination",
           "consumes": [
@@ -61,6 +74,11 @@ export const swaggerDocumentation= {
             "UI Defination from json schema"
           ],
           "summary": "Get page config for specific tenant id",
+          "security": [
+            {
+              "BearerAuth": []
+            }
+          ],
           "description": "Get page config for specific tenant id",
           "operationId": "pageConfig/{tenantId}",
           "produces": [
@@ -99,6 +117,11 @@ export const swaggerDocumentation= {
           ],
           "summary": "Update page config for existing tenant id",
           "description": "Update page config for existing tenant id",
+          "security": [
+            {
+              "BearerAuth": []
+            }
+          ],
           "operationId": "pageConfig/{existingTenantId}",
           "produces": [
             "application/xml",
@@ -135,6 +158,11 @@ export const swaggerDocumentation= {
             "UI Defination from json schema"
           ],
           "summary": "Insert page config into database",
+          "security": [
+            {
+              "BearerAuth": []
+            }
+          ],
           "description": "Insert page config into database",
           "operationId": "pageConfig",
           "consumes": [

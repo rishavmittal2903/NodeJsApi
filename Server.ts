@@ -13,10 +13,10 @@ var port =process.env.PORT||8080;
 app.use(cors());
 app.use(Express.static(__dirname));
 app.use(Express.json())
-app.use('/Entity',entityRouter)
+app.use('/Entity',AuthenticateToken,entityRouter)
 app.use('/token',authRouter);
 app.use("/", swaggerUi.serve, swaggerUi.setup(swaggerDocumentation));
-RedisClient.RedisClientInstance.on("connect",(err,reply)=>{
+RedisClient.RedisClientInstance.createConnection.on("connect",(err)=>{
   ErrorCallback(err);
   console.log("connected to redis");
 })
