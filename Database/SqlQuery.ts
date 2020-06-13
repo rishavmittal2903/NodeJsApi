@@ -7,6 +7,7 @@ export const openConnection = () => {
   console.log("reached");
   sqlInstance.connect((err: MysqlError) => {
         ErrorCallback(err);
+        alert("connected to database");
 console.log("connected to database")
     });
 }

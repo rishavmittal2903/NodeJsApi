@@ -7,6 +7,7 @@ import {entityRouter} from "./controllers/EntityController"
 import {authRouter} from "./controllers/AuthController"
 import { handleError, ErrorCallback } from "./handler/ExceptionHandler";
 import RedisClient from "./redisCache/RedisClient";
+import { openConnection } from "./database/SqlQuery";
 const app = Express();
 var port =process.env.PORT||8080;
 
@@ -16,9 +17,11 @@ app.use(Express.json())
 app.use('/Entity',entityRouter)
 app.use('/token',authRouter);
 app.use("/", swaggerUi.serve, swaggerUi.setup(swaggerDocumentation));
+ openConnection();
 RedisClient.RedisClientInstance.on("connect",(err)=>{
   ErrorCallback(err);
-  console.log("connected to redis");
+  // console.log("connected to redis");
+  alert("connected to redis");
 })
 app.use((err:any, req:Request, res:Response, next:NextFunction) => {
     handleError(err, res);
