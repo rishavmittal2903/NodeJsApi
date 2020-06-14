@@ -1,4 +1,4 @@
-import { Response} from "express";
+import { Response, NextFunction} from "express";
 import { Enums } from "../shared/Enums";
 
 
@@ -21,5 +21,5 @@ export default class ErrorHandler extends Error {
  }
 
  export const ErrorCallback=(err:any)=>{
-  if(err) throw new ErrorHandler(500,err.message);
+  if(err) {return new ErrorHandler(500,err)};
   }

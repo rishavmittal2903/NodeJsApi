@@ -7,23 +7,22 @@ import {entityRouter} from "./controllers/EntityController"
 import {authRouter} from "./controllers/AuthController"
 import { handleError, ErrorCallback } from "./handler/ExceptionHandler";
 import RedisClient from "./redisCache/RedisClient";
-import { openConnection } from "./database/SqlQuery";
+import https from "https"
+
 const app = Express();
 var port =process.env.PORT||8080;
-
 app.use(cors());
 app.use(Express.static(__dirname));
 app.use(Express.json())
-app.use('/Entity',entityRouter)
+app.use('/Entity',AuthenticateToken,entityRouter)
 app.use('/token',authRouter);
 app.use("/", swaggerUi.serve, swaggerUi.setup(swaggerDocumentation));
- openConnection();
-RedisClient.RedisClientInstance.on("connect",(err)=>{
+RedisClient.RedisClientInstance.on("connect",(err,next:NextFunction)=>{
   ErrorCallback(err);
-  // console.log("connected to redis");
-  alert("connected to redis");
+  console.log("connected to redis");
 })
 app.use((err:any, req:Request, res:Response, next:NextFunction) => {
     handleError(err, res);
   });
-app.listen(port, () => console.log('server started'))
+  app.listen(8081,()=>console.log('Http server started on port '+8081))
+  https.createServer(app).listen(port, () => console.log('https server started on port '+8080))

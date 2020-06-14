@@ -1,23 +1,24 @@
 import RedisClient from "../redisCache/RedisClient"
 import ErrorHandler, { ErrorCallback } from "../handler/ExceptionHandler"
 import { CONNECTION_NOT_ESTABLISHED, KEY_NOT_EXIST } from "../shared/ErrorMessages";
+import { NextFunction } from "express";
 
 const Instance=RedisClient.RedisClientInstance;
-const isConnectionEstablished = () => {
+const isConnectionEstablished = (next:NextFunction) => {
     if (!Instance.connected)
-        throw new ErrorHandler(500, CONNECTION_NOT_ESTABLISHED);
+        next(ErrorCallback(CONNECTION_NOT_ESTABLISHED));
 }
-export const setValue = (key: string, value: any) => {
-    isConnectionEstablished();
+export const setValue = (key: string, value: any,next:NextFunction) => {
+    isConnectionEstablished(next);
     Instance.set(key, value,(err,reply)=>{
-        ErrorCallback(err);
+        if(err){next(ErrorCallback(err))};
     });
 }
-export  const getValueAsperKey =async (key: string) => {
-    isConnectionEstablished();
+export  const getValueAsperKey =async (key: string,next:NextFunction) => {
+    isConnectionEstablished(next);
     if(!Instance.exists(key))
     {
-        throw new ErrorHandler(500, KEY_NOT_EXIST);
+        next(ErrorCallback(KEY_NOT_EXIST));
     }
  return  await new Promise((resolve,reject)=>{
     Instance.get(key,(err,value)=>{
@@ -27,15 +28,15 @@ export  const getValueAsperKey =async (key: string) => {
   })
      
 }
-export const setValueWithExipryTime = (key: string,expiryTime:number, value: any) => {
-    isConnectionEstablished();
+export const setValueWithExipryTime = (key: string,expiryTime:number, value: any,next:NextFunction) => {
+    isConnectionEstablished(next);
     Instance.setex(key,expiryTime,value,(err,reply)=>{
-        ErrorCallback(err);
+        if(err){next(ErrorCallback(err))};
     });
 }
-export const setHashRecord = (hashSetKey:string,key: string, value: any) => {
-    isConnectionEstablished();
+export const setHashRecord = (hashSetKey:string,key: string, value: any,next:NextFunction) => {
+    isConnectionEstablished(next);
     Instance.hset(hashSetKey,key, value,(err,reply)=>{
-        ErrorCallback(err);
+        if(err){next(ErrorCallback(err))};
     });
 }

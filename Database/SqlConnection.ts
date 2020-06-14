@@ -10,21 +10,19 @@ class SqlConnection
     }
     public static get SqlClient():mysql.Connection
     {
-        //{host: "mysql-test-dev.mysql.database.azure.com", user: "mysqltest@mysql-test-dev", password: "mysqldev@123", database: {your_database}, port: 3306, ssl:true}
         if (!SqlConnection._instance) {
             SqlConnection._instance = new SqlConnection();
-            //const port:number=process.env.sqlPort?parseInt(process.env.sqlPort):0;
+            const port:number=process.env.sqlPort?parseInt(process.env.sqlPort):3306;
             SqlConnection._instance._sqlClient=mysql.createConnection({
-                host:"mysql-test-dev.mysql.database.azure.com",
-                user:"mysqltest@mysql-test-dev",
-                password: "mysqldev@123",
-                // database: process.env.sqlDB,
-                port:3306,
+                host:process.env.sqlHost,
+                user:process.env.sqlUser,
+                password: process.env.sqlPassword,
+                //database: process.env.sqlDB,
+                port
                 
               
             })
         }
-
         return SqlConnection._instance._sqlClient;
     }
 }

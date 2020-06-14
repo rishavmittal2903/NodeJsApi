@@ -1,54 +1,44 @@
 import SqlConnection from "./SqlConnection"
 import { MysqlError } from "mysql";
 import { ErrorCallback } from "../handler/ExceptionHandler";
+import { NextFunction } from "express";
+const sqlInstance = SqlConnection.SqlClient;
 
-const sqlInstance=SqlConnection.SqlClient;
-export const openConnection = () => {
-  console.log("reached");
-  sqlInstance.connect((err: MysqlError) => {
-        ErrorCallback(err);
-        alert("connected to database");
-console.log("connected to database")
+const asyncQuery = (query: string, next: NextFunction) => {
+    openConnection(next);
+    return new Promise((resolve, reject) => {
+        sqlInstance.query(query, (err, result) => {
+            if (err) { reject(err) }
+            else { resolve(result) }
+        })
+    })
+}
+
+
+export const openConnection = (next: NextFunction) => {
+    sqlInstance.connect((err: MysqlError) => {
+        if (err) {next(ErrorCallback(err));}
+        console.log("connected to database")
     });
 }
-export const closeConnection = () => {
-    let isClosed: boolean = true;
+export const closeConnection = (next: NextFunction) => {
     sqlInstance.end((err) => {
-        ErrorCallback(err);
+        if (err) { next(ErrorCallback(err)) };
+        console.log("disconnected to database")
     });
 }
 export const destroyConnection = () => {
     sqlInstance.destroy();
 }
-export const insertPageConfig = () => {
-    try {
-        openConnection();
-        /**
-         * query
-         * 
-         */
-
-    }
-    catch (err) {
-        ErrorCallback(err);
-    }
-    finally {
-        closeConnection()
-    }
+export const createDatabase = (next: NextFunction) => {
+    const query = "CREATE DATABASE UIDefinationDB";
+    return asyncQuery(query, next)
 }
-export const getPageConfig = (tenantId:string) => {
-    try {
-        openConnection();
-        /**
-         * query
-         * 
-         */
-
-    }
-    catch (err) {
-        ErrorCallback(err);
-    }
-    finally {
-        closeConnection()
-    }
+export const insertPageConfig = (next: NextFunction) => {
+    const query = "";
+    return asyncQuery(query, next)
+}
+export const getPageConfig = (tenantId: string, next: NextFunction) => {
+    const query = "";
+    return asyncQuery(query, next)
 }
