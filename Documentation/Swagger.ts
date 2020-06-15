@@ -68,7 +68,7 @@ export const swaggerDocumentation= {
           
         }
       },
-      "/Entity/pageConfig/{tenantId}": {
+      "/Config/pageConfig/{tenantId}": {
         "get": {
           "tags": [
             "UI Defination from json schema"
@@ -110,7 +110,7 @@ export const swaggerDocumentation= {
           }
         }
       },
-      "/Entity/pageConfig/{existingTenantId}": {
+      "/Config/pageConfig/{existingTenantId}": {
         "put": {
           "tags": [
             "UI Defination from json schema"
@@ -152,7 +152,7 @@ export const swaggerDocumentation= {
           }
         }
       },
-      "/Entity/pageConfig": {
+      "/Config/pageConfig": {
         "post": {
           "tags": [
             "UI Defination from json schema"

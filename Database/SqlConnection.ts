@@ -8,12 +8,15 @@ class SqlConnection
     private constructor()
     {
     }
-    public static get SqlClient():mysql.Connection
+    public static get SqlClient():mysql.Pool
     {
         if (!SqlConnection._instance) {
             SqlConnection._instance = new SqlConnection();
             const port:number=process.env.sqlPort?parseInt(process.env.sqlPort):3306;
-            SqlConnection._instance._sqlClient=mysql.createConnection({
+
+            /*Connection pooling to maintain connection threads*/
+
+            SqlConnection._instance._sqlClient=mysql.createPool({
                 host:process.env.sqlHost,
                 user:process.env.sqlUser,
                 password: process.env.sqlPassword,

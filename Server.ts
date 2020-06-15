@@ -4,17 +4,20 @@ import Express,{Request,Response,NextFunction} from "express"
 import {swaggerDocumentation} from "./documentation/Swagger"
 import swaggerUi from "swagger-ui-express"
 import {entityRouter} from "./controllers/EntityController"
+import {configRouter} from "./controllers/ConfigController"
 import {authRouter} from "./controllers/AuthController"
 import { handleError, ErrorCallback } from "./handler/ExceptionHandler";
 import RedisClient from "./redisCache/RedisClient";
 import https from "https"
+import SqlConnection from "./database/SqlConnection";
 
 const app = Express();
 var port =process.env.PORT||8080;
 app.use(cors());
 app.use(Express.static(__dirname));
 app.use(Express.json())
-app.use('/Entity',AuthenticateToken,entityRouter)
+app.use('/Entity',AuthenticateToken,entityRouter);
+app.use('/Config',AuthenticateToken,configRouter);
 app.use('/token',authRouter);
 app.use("/", swaggerUi.serve, swaggerUi.setup(swaggerDocumentation));
 RedisClient.RedisClientInstance.on("connect",(err,next:NextFunction)=>{
