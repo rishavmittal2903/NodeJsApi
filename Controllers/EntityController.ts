@@ -24,5 +24,5 @@ entityRouter.post('/pageConfig', (request: Request, response: Response,next:Next
 })
 
 entityRouter.put('/pageConfig/:existingTenantId', (request: Request, response: Response,next:NextFunction) => {
-
+    response.sendStatus(200);
 })

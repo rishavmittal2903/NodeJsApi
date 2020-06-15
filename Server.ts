@@ -18,7 +18,7 @@ app.use('/Entity',AuthenticateToken,entityRouter)
 app.use('/token',authRouter);
 app.use("/", swaggerUi.serve, swaggerUi.setup(swaggerDocumentation));
 RedisClient.RedisClientInstance.on("connect",(err,next:NextFunction)=>{
-  ErrorCallback(err);
+  if(err){next(ErrorCallback(err))};
   console.log("connected to redis");
 })
 app.use((err:any, req:Request, res:Response, next:NextFunction) => {

@@ -31,7 +31,7 @@ export const destroyConnection = () => {
     sqlInstance.destroy();
 }
 export const createDatabase = (next: NextFunction) => {
-    const query = "CREATE DATABASE UIDefinationDB";
+    const query = "CREATE DATABASE UIDefinationTestDB1";
     return asyncQuery(query, next)
 }
 export const insertPageConfig = (next: NextFunction) => {
